@@ -1,0 +1,18 @@
+{# empty Twig template #}
+{% extends "page" %}
+
+{% block content %}
+
+    <!-- Search -->
+    {% include 'search' %}
+
+    <!-- About Section -->
+    {% include 'about' %}
+
+    <!-- Contact Section -->
+    {% include 'contact' %}
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{{ asset('js/home.js') }}"></script>
+{% endblock %}
