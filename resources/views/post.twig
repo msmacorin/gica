@@ -26,9 +26,9 @@
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label for="address">{{ trans('go.address') }}</label>
-                                <input type="text" class="form-control address_autocomplete" placeholder="{{ trans('go.address') }}" id="address" required data-validation-required-message="Please enter your name.">
-                                <input type="hidden" id="latitude" value="{{ latitude }}" name="latitude" />
-                                <input type="hidden" id="longitude" value="{{ longitude }}" name="longitude" />
+                                <input type="text" class="form-control" placeholder="{{ trans('go.address') }}" id="address" required data-validation-required-message="Please enter your name.">
+                                <input type="hidden" id="latitude" value="{{ data.latitude }}" name="latitude" />
+                                <input type="hidden" id="longitude" value="{{ data.longitude }}" name="longitude" />
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>

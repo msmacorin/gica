@@ -11,5 +11,5 @@
 
 return [
     'SITE_NAME' => 'Go Sola',
-    'GOOGLE_API_KEY' => 'AIzaSyADBAY9aG-Y9PWpWEmaZX4BSpggXvXLRP8',
+    'GOOGLE_API_KEY' => 'AIzaSyBpBmsCWfgRytQ6wUUI-nqrR1qKtbMEXGQ',
 ];

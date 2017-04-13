@@ -14,11 +14,8 @@
 Route::get('/', function () {
     return view('home');
 });
-Route::get('/post/{latlon?}', function ($latlon=null) {
-    $ar = explode(',', $latlon);
-    return view('post', ['latitude' => $ar[0], 'longitude' => $ar[1],]);
-});
 
+Route::get('/posts/view', 'PostController@getView');
 Route::get('/posts/nearby', 'PostController@getNearby');
 Route::post('/posts/add', 'PostController@postAdd');
 Route::get('/post-types/types', 'PostTypeController@getTypes');

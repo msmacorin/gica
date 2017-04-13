@@ -15,7 +15,7 @@ var autocomplete;
 function autocompleteInit() {
     autocomplete = new google.maps.places.Autocomplete(
             document.getElementById('location'), {
-        types: ['cities'],
+        types: ['(cities)'],
         componentRestrictions: {'country': 'br'}
     });
 
@@ -101,9 +101,9 @@ $('#btnSearch').click(function () {
 });
 
 $('#btnAdd').click(function () {
-    var url = '/post';
+    var url = '/posts/view';
     if ($('#latitude').val()) {
-        url += '/' + $('#latitude').val() + ',' + $('#longitude').val();
+        url += '/?latitude=' + $('#latitude').val() + '&longitude=' + $('#longitude').val();
     }
     window.location.href = url;
 })

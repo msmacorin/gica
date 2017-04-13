@@ -20,21 +20,47 @@ function fillSelectPostType() {
     });
 }
 
-function createMarker(latlng, html) {
-//    var latlng = new google.maps.LatLng($('#latitude').val(), $('#longitude').val());
-    var contentString = html;
-    var marker = new google.maps.Marker({
+function createMarker() {
+    if (marker) {
+        marker.setMap(null);
+        marker = null;
+    }
+
+    var latlng = new google.maps.LatLng($('#latitude').val(), $('#longitude').val());
+    map.setCenter(latlng);
+    var contentString = '<b>Localização</b><br>' + $('#address').val() + '<br>' + latlng;
+    marker = new google.maps.Marker({
         position: latlng,
         map: map,
         zIndex: Math.round(latlng.lat() * -100000) << 5
     });
 
-    google.maps.event.addListener(marker, 'click', function () {
+    google.maps.event.addListener(newMarker, 'click', function () {
         infowindow.setContent(contentString);
-        infowindow.open(map, marker);
+        infowindow.open(map, newMarker);
     });
+}
 
-    return marker;
+function getAddress() {
+    var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
+    url += $('#latitude').val() + ',' + $('#longitude').val();
+    url += '&sensor=true';
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        success: function (data) {
+            if (data.results && data.results.length > 0) {
+                var address = data.results[0].address_components[1].long_name; // rua
+                address += ' - ' + data.results[0].address_components[2].long_name; // bairro
+                address += ', ' + data.results[0].address_components[3].long_name; // cidade
+                address += ' - ' + data.results[0].address_components[5].short_name; // estado
+                address += ', ' + data.results[0].address_components[6].long_name; // pais
+                
+                $('#address').val(address);
+                createMarker();
+            }
+        }
+    });
 }
 
 function initMap() {
@@ -50,48 +76,39 @@ function initMap() {
         },
         navigationControl: true,
     };
-
     map = new google.maps.Map(document.getElementById('map'), myOptions);
-
     infowindow = new google.maps.InfoWindow({
         size: new google.maps.Size(150, 50)
     });
-
     google.maps.event.addListener(map, 'click', function () {
         infowindow.close();
     });
-    
     google.maps.event.addListener(map, 'click', function (event) {
-        if (marker) {
-            marker.setMap(null);
-            marker = null;
-        }
-        marker = createMarker(event.latLng, "<b>Localização</b><br>" + event.latLng);
+        $('#latitude').val(event.latLng.lat());
+        $('#longitude').val(event.latLng.lng());
+        getAddress();
     });
 }
 
 function autocompleteInit() {
-    $('.address_autocomplete').each(function () {
-        var autocomplete;
-        autocomplete = new google.maps.places.Autocomplete(
-                document.getElementById('address'), {
-            types: ['geocode'],
-            componentRestrictions: {'country': 'br'}
-        });
+    var autocomplete;
+    autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('address'), {
+        types: ['geocode']
+    });
 
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
-            var place = autocomplete.getPlace();
-            if (place.geometry) {
-                $('#latitude').val(place.geometry.location.lat());
-                $('#longitude').val(place.geometry.location.lng());
-                createMarker();
-            }
-        });
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        var place = autocomplete.getPlace();
+        if (place.geometry) {
+            $('#latitude').val(place.geometry.location.lat());
+            $('#longitude').val(place.geometry.location.lng());
+            marker = createMarker();
+        }
+    });
 
-        google.maps.event.addDomListener(document.getElementById('address'), 'keydown', function (e) {
-            $('#latitude').val('');
-            $('#longitude').val('');
-        });
+    google.maps.event.addDomListener(document.getElementById('address'), 'keydown', function (e) {
+        $('#latitude').val('');
+        $('#longitude').val('');
     });
 }
 
@@ -105,8 +122,8 @@ $(document).ready(function () {
         $('#longitude').val('-47.882529');
     }
 
-    $('.date').mask('00/00/0000');
     autocompleteInit();
     fillSelectPostType();
     initMap();
+    $('.date').mask('00/00/0000');
 })
