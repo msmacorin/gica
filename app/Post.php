@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model {
 
+    const ACTIVE = 1;
+    const BLOCKED = 2;
+    const REMOVED = 3;
+    const DENIED = 4;
+    
     protected $fillable = ['post_types_id', 'observation', 'occurred_at', 'latitude', 'longitude', 'address', 'status'];
 
 

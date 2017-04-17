@@ -531,3 +531,8 @@ div#maincontent {
 #post .post-map {
     height: 500px;
 }
+
+.parsley-errors-list li {
+    color: #FF6347;
+    cursor: default;
+}

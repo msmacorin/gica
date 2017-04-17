@@ -7,7 +7,7 @@
 var map, marker, infoWindow = null;
 
 function fillSelectPostType() {
-    $('#post_type').append('<option>Selecione...</option>');
+    $('#post_type').append('<option value="">Selecione...</option>');
     $.ajax({
         url: '/post-types/types',
         type: 'GET',
@@ -55,7 +55,7 @@ function getAddress() {
                 address += ', ' + data.results[0].address_components[3].long_name; // cidade
                 address += ' - ' + data.results[0].address_components[5].short_name; // estado
                 address += ', ' + data.results[0].address_components[6].long_name; // pais
-                
+
                 $('#address').val(address);
                 createMarker();
             }
@@ -94,7 +94,8 @@ function autocompleteInit() {
     var autocomplete;
     autocomplete = new google.maps.places.Autocomplete(
             document.getElementById('address'), {
-        types: ['geocode']
+        types: ['geocode'],
+        componentRestrictions: {'country': 'br'}
     });
 
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
@@ -112,6 +113,16 @@ function autocompleteInit() {
     });
 }
 
+$(document).on('click', '#btnSend', function () {
+    if ($('#postForm').parsley().validate()) {
+        if (!$('#latitude').val()) {
+            bootbox.alert('Por favor, selecione um local para a ocorrência!');
+            return false;
+        }
+        
+        $('#postForm').submit();
+    }
+});
 
 $(document).ready(function () {
     $('#page-top').removeClass('home');
