@@ -11,6 +11,7 @@ return [
     'add' => 'Adicionar um novo',
     'address' => 'Endereço',
     'contact' => 'Contato',
+    'message' => 'Descrição do ocorrido',
     'new' => 'Novo post',
     'observation' => 'Descreva o ocorrido',
     'occurred_at' => 'Ocorrido em',

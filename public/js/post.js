@@ -35,9 +35,9 @@ function createMarker() {
         zIndex: Math.round(latlng.lat() * -100000) << 5
     });
 
-    google.maps.event.addListener(newMarker, 'click', function () {
+    google.maps.event.addListener(marker, 'click', function () {
         infowindow.setContent(contentString);
-        infowindow.open(map, newMarker);
+        infowindow.open(map, marker);
     });
 }
 

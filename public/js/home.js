@@ -10,7 +10,7 @@
 //http://plnkr.co/edit/qYsJFeyxH9MIPAOBKbvr?p=preview
 
 bootbox.setLocale('br');
-var autocomplete;
+var autocomplete, map;
 
 function autocompleteInit() {
     autocomplete = new google.maps.places.Autocomplete(
@@ -53,6 +53,21 @@ function geoLocalizacao() {
     navigator.geolocation.getCurrentPosition(browserLocalizacao, ipLocalizacao);
 }
 
+function addMarker(latitude, longitude, icon, content) {
+    var latlng = new google.maps.LatLng(latitude, longitude);
+    map.setCenter(latlng);
+    var marker = new google.maps.Marker({
+        map: map,
+        position: latlng,
+        icon: icon
+    });
+
+    google.maps.event.addListener(marker, 'click', function () {
+        infowindow.setContent(content);
+        infowindow.open(map, marker);
+    });
+}
+
 function search() {
     if (!$('#latitude').val()) {
         bootbox.alert({
@@ -66,7 +81,9 @@ function search() {
         url: '/posts/nearby/?latitude=' + $('#latitude').val() + '&longitude=' + $('#longitude').val(),
         type: 'GET',
         success: function (data) {
-
+            $.each($.parseJSON(data), function (i, item) {
+                addMarker(item.latitude, item.longitude, item.icon, item.content);
+            });
         }
     })
 }
@@ -76,17 +93,17 @@ function initMap() {
     var myOptions = {
         zoom: 14,
         center: new google.maps.LatLng($('#latitude').val(), $('#longitude').val()),
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-            mapTypeIds: [
-                google.maps.MapTypeId.ROADMAP,
-            ]
-        },
-        navigationControl: true,
+        scrollwheel: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
     };
 
     map = new google.maps.Map(document.getElementById('map'),
             myOptions);
+    infowindow = new google.maps.InfoWindow({
+        size: new google.maps.Size(150, 50)
+    });
+
+    search();
 }
 
 function loadView() {

@@ -27,6 +27,8 @@
                 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
                 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
             <![endif]-->
+            {# Map icons #}
+            <link href="{{ asset('vendor/map-icons/dist/css/map-icons.css') }}" rel="stylesheet" type="text/css">
 
         </head>
 
@@ -47,9 +49,6 @@
                 <i class="fa fa-chevron-up"></i>
             </a>
         </div>
-
-        <!-- Portfolio Modals -->
-        {% include 'modals' %}
 
         <!-- jQuery -->
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
@@ -79,6 +78,9 @@
             var google_api_key = '{{ config_get('constants.GOOGLE_API_KEY') }}';
         </script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ config_get('constants.GOOGLE_API_KEY') }}&amp;v=3.exp&amp;libraries=places"></script> <!-- Google APIs -->
+
+        {# Map icons #}
+        <script type="text/javascript" src="{{ asset('vendor/map-icons/dist/js/map-icons.js') }}"></script>
 
     {% block javascript %}{% endblock %}
 </body>
