@@ -14,7 +14,13 @@ class PostController extends Controller {
     }
 
     public function getNearby(Request $request) {
-        $posts = Post::with('types')->get();
+        $params = $request->only('latitude', 'longitude');
+        $ids = Post::getByDistance($params['latitude'], $params['longitude'], 5);
+        if (empty($ids)) {
+            return response('', \Illuminate\Http\Response::HTTP_NO_CONTENT);
+        }
+        $ids = array_column($ids, 'id');
+        $posts = Post::with('types')->whereIn('id', $ids)->get();
         $data = [];
         foreach ($posts as $post) {
             $data[] = [
@@ -24,7 +30,7 @@ class PostController extends Controller {
                 'content' => $this->makeContent($post->occurred_at->format('d/m/Y'), $post->types->name, $post->address, $post->observation)
             ];
         }
-        return json_encode($data);
+        return response()->json($data, \Illuminate\Http\Response::HTTP_OK);
     }
 
     public function postAdd(Request $request) {

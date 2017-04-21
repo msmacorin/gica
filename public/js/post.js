@@ -68,13 +68,8 @@ function initMap() {
     var myOptions = {
         zoom: 14,
         center: new google.maps.LatLng($('#latitude').val(), $('#longitude').val()),
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-            mapTypeIds: [
-                google.maps.MapTypeId.ROADMAP,
-            ]
-        },
-        navigationControl: true,
+        scrollwheel: false,        
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
     };
     map = new google.maps.Map(document.getElementById('map'), myOptions);
     infowindow = new google.maps.InfoWindow({

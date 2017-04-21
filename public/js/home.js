@@ -3,14 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-
-//exemplo de form com o bootbox.
-//http://plnkr.co/edit/qYsJFeyxH9MIPAOBKbvr?p=preview
-
 bootbox.setLocale('br');
 var autocomplete, map;
+var markers = [];
+
+// Returns a function, that, as long as it continues to be invoked, will not
+// be triggered. The function will be called after it stops being called for
+// N milliseconds. If `immediate` is passed, trigger the function on the
+// leading edge, instead of the trailing.
+// https://davidwalsh.name/javascript-debounce-function
+function debounce(func, wait, immediate) {
+    var timeout;
+    return function () {
+        var context = this, args = arguments;
+        var later = function () {
+            timeout = null;
+            if (!immediate)
+                func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow)
+            func.apply(context, args);
+    };
+}
 
 function autocompleteInit() {
     autocomplete = new google.maps.places.Autocomplete(
@@ -53,9 +70,15 @@ function geoLocalizacao() {
     navigator.geolocation.getCurrentPosition(browserLocalizacao, ipLocalizacao);
 }
 
+function clearMarkers() {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
+    markers = new Array(0);
+}
+
 function addMarker(latitude, longitude, icon, content) {
     var latlng = new google.maps.LatLng(latitude, longitude);
-    map.setCenter(latlng);
     var marker = new google.maps.Marker({
         map: map,
         position: latlng,
@@ -66,6 +89,8 @@ function addMarker(latitude, longitude, icon, content) {
         infowindow.setContent(content);
         infowindow.open(map, marker);
     });
+
+    markers.push(marker);
 }
 
 function search() {
@@ -76,12 +101,13 @@ function search() {
         });
         return false;
     }
-
+    originalCenter = new google.maps.LatLng($("#latitude").val(), $("#longitude").val());
     $.ajax({
         url: '/posts/nearby/?latitude=' + $('#latitude').val() + '&longitude=' + $('#longitude').val(),
         type: 'GET',
         success: function (data) {
-            $.each($.parseJSON(data), function (i, item) {
+            clearMarkers();
+            $.each(data, function (i, item) {
                 addMarker(item.latitude, item.longitude, item.icon, item.content);
             });
         }
@@ -89,6 +115,8 @@ function search() {
 }
 
 function initMap() {
+    var originalCenter = new google.maps.LatLng($("#latitude").val(), $("#longitude").val());
+
     // create the map
     var myOptions = {
         zoom: 14,
@@ -99,11 +127,56 @@ function initMap() {
 
     map = new google.maps.Map(document.getElementById('map'),
             myOptions);
+    map.addListener('center_changed', function () {
+        updateCenter(this);
+    });
+
+    // return the distance in meters
+    google.maps.LatLng.prototype.distanceFrom = function (latlng) {
+        var lat = [this.lat(), latlng.lat()]
+        var lng = [this.lng(), latlng.lng()]
+        var R = 6378137;
+        var dLat = (lat[1] - lat[0]) * Math.PI / 180;
+        var dLng = (lng[1] - lng[0]) * Math.PI / 180;
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat[0] * Math.PI / 180) * Math.cos(lat[1] * Math.PI / 180) *
+                Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        return Math.round(d);
+    }
+
     infowindow = new google.maps.InfoWindow({
         size: new google.maps.Size(150, 50)
     });
 
     search();
+
+    var updateCenter = function (obj) {
+        if (!obj.get('dragging') && !obj.get('resizing')
+                && obj.get('oldCenter')
+                && obj.get('oldCenter') !== obj.getCenter()) {
+            center = obj.getCenter();
+            var lat = center.lat();
+            var lng = center.lng();
+
+            $("#latitude").val(lat);
+            $("#longitude").val(lng);
+
+            debounceSearch();
+        }
+        if (!obj.get('dragging')) {
+            obj.set('oldCenter', obj.getCenter())
+        }
+    };
+
+    var debounceSearch = debounce(function () {
+        var newCenter = new google.maps.LatLng($("#latitude").val(), $("#longitude").val());
+        var dist = newCenter.distanceFrom(originalCenter);
+        if (dist > 500) {
+            search();
+        }
+    }, 1500);
 }
 
 function loadView() {
