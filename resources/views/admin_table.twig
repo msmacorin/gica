@@ -1,0 +1,40 @@
+<thead>
+    <tr>
+        <th style="width: 15%">{{ trans('go.type') }}</th>
+        <th style="width: 15%">{{ trans('go.occurred_at') }}</th>
+        <th style="width: 60%">{{ trans('go.address') }}</th>
+        <th>{{ trans('go.actions') }}</th>
+    </tr>
+</thead>
+<tbody>
+    {% for post in posts %}
+        <tr id='{{ post.id }}'>
+            <td>{{ post.type }}</td>
+            <td>{{ post.occurred_at }}</td>
+            <td>{{ post.address }}</td>
+            <td>
+                {% if post.status != 1 %}
+                    <a href="#" onclick="changeStatus(1, {{ post.id }});" title="Aceitar">
+                        <span class="glyphicon glyphicon-ok-sign" />
+                    </a>
+                {% endif %}
+                {% if post.status != 3 %}
+                    <a href="#" onclick="changeStatus(3, {{ post.id }});" title="Remover">
+                        <span class="glyphicon glyphicon-remove-sign"></span>
+                    </a>
+                {% endif %}
+                {% if post.status != 4 %}
+                    <a href="#" onclick="changeStatus(4, {{ post.id }});" title="Negar">
+                        <span class="glyphicon glyphicon-ban-circle"></span>
+                    </a>
+                {% endif %}
+            </a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="4">{{ trans('go.empty') }}</td>
+    </tr>
+{% endfor %}
+
+</tbody>

@@ -524,8 +524,12 @@ div#maincontent {
     padding: 0 50px 0 50px;
 }
 
-#page-top.post .nav, #page-top.post .navbar-toggle{
+#page-top .nav, #page-top.post #bs-example-navbar-collapse-1 {
     display: none;
+}
+
+#page-top.home .nav, #page-top.post #bs-example-navbar-collapse-1 {
+    display: block;
 }
 
 #post .post-map {
