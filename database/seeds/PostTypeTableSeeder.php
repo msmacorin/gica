@@ -13,15 +13,15 @@ class PostTypeTableSeeder extends Seeder {
     public function run() {
         PostType::create([
             'name' => 'Iluminação',
-            'icon' => 'img/type_icons/small-light-bulb.png',
+            'icon' => 'img/type_icons/lanterne.png',
         ]);
         PostType::create([
             'name' => 'Rua deserta',
-            'icon' => 'img/type_icons/road-perspective.png',
+            'icon' => 'img/type_icons/caution.png',
         ]);
         PostType::create([
             'name' => 'Assédio',
-            'icon' => 'img/type_icons/thumb-down.png',
+            'icon' => 'img/type_icons/abduction.png',
         ]);
     }
 
