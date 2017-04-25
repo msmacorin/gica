@@ -540,3 +540,7 @@ div#maincontent {
     color: #FF6347;
     cursor: default;
 }
+
+#messageBlock {
+    display: none;
+}

@@ -10,6 +10,7 @@
  */
 
 return [
+    'ADMIN_EMAIL' => 'ms.macorin2@gmail.com',
     'SITE_NAME' => 'Go Sola',
     'GOOGLE_API_KEY' => 'AIzaSyBpBmsCWfgRytQ6wUUI-nqrR1qKtbMEXGQ',
 ];

@@ -198,6 +198,25 @@ $('#btnAdd').click(function () {
     window.location.href = url;
 })
 
+$(document).on('click', '#btnSend', function () {
+    if ($('#contactForm').parsley().validate()) {
+        $.ajax({
+            type: 'POST',
+            url: '/contact/send',
+            data: $('#contactForm').serialize(),
+            success: function (data) {
+                $('#messageBlock .form-group').html('<p class="alert alert-success">' + data.message + '</p>');
+                $('#messageBlock').show();
+                $('#contactForm').trigger('reset');
+            },
+            error: function (data) {
+                $('#messageBlock .form-group').html('<p class="alert alert-danger">' + data.message + '</p>');
+                $('#messageBlock').show();
+            }
+        });
+    }
+});
+
 $(window).resize(function () {
     loadView();
 });
@@ -205,6 +224,7 @@ $(window).resize(function () {
 $(document).ready(function () {
     $('#page-top').removeClass('post');
     $('#page-top').addClass('home');
+    $('.phone').mask('(00)0000-00009');
 
     loadView();
     if (!$('#latitude').val()) {
