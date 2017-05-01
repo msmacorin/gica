@@ -120,11 +120,28 @@ function initMap() {
     // create the map
     var myOptions = {
         zoom: 14,
-        center: new google.maps.LatLng($('#latitude').val(), $('#longitude').val()),
+        center: originalCenter,
         scrollwheel: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
     };
 
+    var updateCenter = function (obj) {
+        if (!obj.get('dragging') && !obj.get('resizing')
+                && obj.get('oldCenter')
+                && obj.get('oldCenter') !== obj.getCenter()) {
+            center = obj.getCenter();
+            var lat = center.lat();
+            var lng = center.lng();
+
+            $("#latitude").val(lat);
+            $("#longitude").val(lng);
+            debounceSearch();
+        }
+        if (!obj.get('dragging')) {
+            obj.set('oldCenter', obj.getCenter())
+        }
+    };
+    
     map = new google.maps.Map(document.getElementById('map'),
             myOptions);
     map.addListener('center_changed', function () {
@@ -152,24 +169,6 @@ function initMap() {
 
     search();
 
-    var updateCenter = function (obj) {
-        if (!obj.get('dragging') && !obj.get('resizing')
-                && obj.get('oldCenter')
-                && obj.get('oldCenter') !== obj.getCenter()) {
-            center = obj.getCenter();
-            var lat = center.lat();
-            var lng = center.lng();
-
-            $("#latitude").val(lat);
-            $("#longitude").val(lng);
-
-            debounceSearch();
-        }
-        if (!obj.get('dragging')) {
-            obj.set('oldCenter', obj.getCenter())
-        }
-    };
-
     var debounceSearch = debounce(function () {
         var newCenter = new google.maps.LatLng($("#latitude").val(), $("#longitude").val());
         var dist = newCenter.distanceFrom(originalCenter);
@@ -187,6 +186,7 @@ function loadView() {
 }
 
 $('#btnSearch').click(function () {
+    map.setCenter(new google.maps.LatLng($("#latitude").val(), $("#longitude").val()));
     search();
 });
 
