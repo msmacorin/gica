@@ -98,7 +98,7 @@ function autocompleteInit() {
         if (place.geometry) {
             $('#latitude').val(place.geometry.location.lat());
             $('#longitude').val(place.geometry.location.lng());
-            marker = createMarker();
+            createMarker();
         }
     });
 
