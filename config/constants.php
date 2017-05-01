@@ -11,6 +11,6 @@
 
 return [
     'ADMIN_EMAIL' => 'ms.macorin2@gmail.com',
-    'SITE_NAME' => 'Go Sola',
+    'SITE_NAME' => 'GIca',
     'GOOGLE_API_KEY' => 'AIzaSyBpBmsCWfgRytQ6wUUI-nqrR1qKtbMEXGQ',
 ];

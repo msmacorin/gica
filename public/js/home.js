@@ -196,7 +196,7 @@ $('#btnAdd').click(function () {
         url += '/?latitude=' + $('#latitude').val() + '&longitude=' + $('#longitude').val();
     }
     window.location.href = url;
-})
+});
 
 $(document).on('click', '#btnSend', function () {
     if ($('#contactForm').parsley().validate()) {
