@@ -39,8 +39,7 @@ function autocompleteInit() {
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
         var place = autocomplete.getPlace();
         if (place.geometry) {
-            $('#latitude').val(place.geometry.location.lat());
-            $('#longitude').val(place.geometry.location.lng());
+            changeLocation(place.geometry.location.lat(), place.geometry.location.lng(), false);
         }
     });
 
@@ -50,24 +49,36 @@ function autocompleteInit() {
     });
 }
 
+function changeLocation(lat, lng, searchTrigger) {
+    $('#latitude').val(lat);
+    $('#longitude').val(lng);
+    localStorage.setItem('latitude', lat);
+    localStorage.setItem('longitude', lng);
+    if (searchTrigger && map != undefined) {
+        $('#btnSearch').trigger('click');
+    }
+}
+
 function browserLocalizacao(position) {
-    $('#latitude').val(position.coords.latitude);
-    $('#longitude').val(position.coords.longitude);
+    changeLocation(position.coords.latitude, position.coords.longitude, true);
 }
 
 function ipLocalizacao() {
     $.getJSON("http://ip-api.com/json/?callback=?", function (data) {
-        $('#latitude').val(data['lat']);
-        $('#longitude').val(data['lon']);
-    }).fail(function () {
-        //brasilia
-        $('#latitude').val('-15.794157');
-        $('#longitude').val('-47.882529');
+        changeLocation(data['lat'], data['lon'], true);
     });
 }
 
 function geoLocalizacao() {
-    navigator.geolocation.getCurrentPosition(browserLocalizacao, ipLocalizacao);
+    if (localStorage.getItem('latitude')) {
+        $('#latitude').val(localStorage.getItem('latitude'));
+        $('#longitude').val(localStorage.getItem('longitude'));
+    } else {
+        //brasilia
+        $('#latitude').val('-15.794157');
+        $('#longitude').val('-47.882529');
+        navigator.geolocation.getCurrentPosition(browserLocalizacao, ipLocalizacao);
+    }
 }
 
 function clearMarkers() {
@@ -141,7 +152,7 @@ function initMap() {
             obj.set('oldCenter', obj.getCenter())
         }
     };
-    
+
     map = new google.maps.Map(document.getElementById('map'),
             myOptions);
     map.addListener('center_changed', function () {
@@ -225,11 +236,8 @@ $(document).ready(function () {
     $('#page-top').removeClass('post');
     $('#page-top').addClass('home');
     $('.phone').mask('(00)0000-00009');
-
     loadView();
-    if (!$('#latitude').val()) {
-        geoLocalizacao();
-    }
+    geoLocalizacao();
     autocompleteInit();
     setTimeout(initMap, 1000);
 });
