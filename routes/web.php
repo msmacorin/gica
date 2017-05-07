@@ -26,6 +26,10 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::post('/contact/send', 'ContactController@send');
 
+// facebook
+Route::get('/facebook/redirect', 'SocialAuthController@facebookRedirect');
+Route::get('/facebook/callback', 'SocialAuthController@facebookCallback');
+
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/admin', function() {
         return view('admin');

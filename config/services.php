@@ -34,5 +34,9 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
-
+    'facebook' => [
+        'client_id' => '501195690083620',
+        'client_secret' => '1d4d172c74ec965ebd3d4c080a7001d9',
+        'redirect' => env('APP_URL', 'http://gosola.dev'). '/facebook/callback',
+    ],
 ];
