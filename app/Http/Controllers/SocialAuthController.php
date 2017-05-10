@@ -68,5 +68,4 @@ class SocialAuthController extends Controller {
         }
         return view($page, ['message' => $message]);
     }
-
 }

@@ -43,4 +43,6 @@ Route::group(['middleware' => 'auth'], function() {
     
     Route::get('/admin/get-posts', 'PostController@getPosts');
     Route::post('/admin/update-posts', 'PostController@postPosts');
+    Route::get('/admin/get-users', 'UserController@getUsers');
+    Route::post('/admin/update-users', 'UserController@postUsers');
 });

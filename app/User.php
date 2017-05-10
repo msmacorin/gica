@@ -11,7 +11,6 @@ class User extends Authenticatable {
 
     const ACTIVE = 1;
     const BLOCKED = 2;
-    const REMOVED = 3;
     const DENIED = 4;
 
     /**
@@ -31,5 +30,9 @@ class User extends Authenticatable {
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function socialAccount() {
+        return $this->hasMany('App\SocialAccounts', 'user_id');
+    }
 
 }

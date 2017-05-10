@@ -5,9 +5,11 @@
  */
 
 function changeStatus(status, id) {
+    var data = {'status': status, 'id': id};
     $.ajax({
-        url: '/admin/posts/?id=' + id + '&status=' + status,
+        url: '/admin/update-posts',
         type: 'POST',
+        data: data,
         beforeSend: function (request) {
             request.setRequestHeader("X-CSRF-TOKEN", $('meta[name="_token"]').attr('content'));
         },

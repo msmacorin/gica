@@ -5,9 +5,11 @@
  */
 
 function changeStatus(status, id) {
+    var data = {'status': status, 'id': id};
     $.ajax({
-        url: '/admin/posts/?id=' + id + '&status=' + status,
+        url: '/admin/update-users',
         type: 'POST',
+        data: data,
         beforeSend: function (request) {
             request.setRequestHeader("X-CSRF-TOKEN", $('meta[name="_token"]').attr('content'));
         },
@@ -18,16 +20,16 @@ function changeStatus(status, id) {
 }
 
 function search(type) {
-    var url = '/admin/posts/?status=' + type;
+    var url = '/admin/get-users/?status=' + type;
     $.ajax({
         url: url,
         success: function (data) {
-            $('#tablePost').html(data);
+            $('#tableUser').html(data);
         }
     });
 }
 
-$('#post_status').on('change', function () {
+$('#user_status').on('change', function () {
     search(this.value);
 })
 
