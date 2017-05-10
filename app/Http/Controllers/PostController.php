@@ -12,35 +12,40 @@ class PostController extends Controller {
         $latlon = $request->only('latitude', 'longitude');
         return view('post', ['data' => $latlon,]);
     }
-    
+
     public function getPosts(Request $request) {
-        $params = $request->only('status');
-        $posts = Post::with('types')
-                ->where('status', $params['status'])
-                ->orderBy('created_at', 'DESC')
-                ->get();
-        $data = [];
-        foreach ($posts as $post) {
-            $data[] = [
-                'id' => $post->id,
-                'type' => $post->types->name,
-                'occurred_at' => $post->occurred_at->format('d/m/Y'),
-                'address' => $post->address,
-                'status' => $post->status,
-            ];
+        if (auth()->user()->administrator) {
+            $params = $request->only('status');
+            $posts = Post::with('types')
+                    ->where('status', $params['status'])
+                    ->orderBy('created_at', 'DESC')
+                    ->get();
+            $data = [];
+            foreach ($posts as $post) {
+                $data[] = [
+                    'id' => $post->id,
+                    'type' => $post->types->name,
+                    'occurred_at' => $post->occurred_at->format('d/m/Y'),
+                    'address' => $post->address,
+                    'status' => $post->status,
+                ];
+            }
+            return view('admin_table_posts', ['posts' => $data]);
         }
-        return view('admin_table_posts', ['posts' => $data]);
+        return redirect('/');
     }
 
     public function postPosts(Request $request) {
         try {
-            $params = $request->all();
-            Post::where('id', $params['id'])
-                    ->update(['status' => $params['status'],]);
-            return response('', \Illuminate\Http\Response::HTTP_NO_CONTENT);
+            if (auth()->user()->administrator) {
+                $params = $request->all();
+                Post::where('id', $params['id'])
+                        ->update(['status' => $params['status'],]);
+                return response('', \Illuminate\Http\Response::HTTP_NO_CONTENT);
+            }
         } catch (Exception $e) {
-            return response('', \Illuminate\Http\Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+        return response('', \Illuminate\Http\Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     public function getNearby(Request $request) {

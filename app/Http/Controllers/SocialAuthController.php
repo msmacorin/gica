@@ -24,9 +24,7 @@ class SocialAuthController extends Controller {
         $message = trans('go.welcome_message_blocked');
         if ($account) {
             $user = $account->user;
-            if ($user->status == User::ACTIVE) {
-                $page = 'home';
-            } else if ($user->status == User::DENIED) {
+            if ($user->status == User::DENIED) {
                 $message = trans('go.welcome_message_denied');
             }
         } else {
@@ -65,7 +63,9 @@ class SocialAuthController extends Controller {
 
         if ($user->status == User::ACTIVE) {
             auth()->login($user, true);
+            return redirect('/');
         }
+        
         return view($page, ['message' => $message]);
     }
 }
