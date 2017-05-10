@@ -35,8 +35,8 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
     'facebook' => [
-        'client_id' => '501195690083620',
-        'client_secret' => '1d4d172c74ec965ebd3d4c080a7001d9',
+        'client_id' => '1790692367926714',
+        'client_secret' => '3109467cc44a80665fa28068e6553eed',
         'redirect' => env('APP_URL', 'http://gosola.dev'). '/facebook/callback',
     ],
 ];

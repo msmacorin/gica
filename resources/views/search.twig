@@ -10,9 +10,11 @@
                     <button id="btnSearch" class="btn btn-info btn-lg" type="button" title="{{ trans('go.search') }}">
                         <i class="glyphicon glyphicon-search"></i>
                     </button>
-                    <button id="btnAdd" class="btn btn-success btn-lg" type="button" title="{{ trans('go.add') }}">
-                        <i class="glyphicon glyphicon-plus"></i>
-                    </button>
+                    {% if user|length > 0 %}
+                        <button id="btnAdd" class="btn btn-success btn-lg" type="button" title="{{ trans('go.add') }}">
+                            <i class="glyphicon glyphicon-plus"></i>
+                        </button>
+                    {% endif %}
                 </span>
             </div>
         </div>

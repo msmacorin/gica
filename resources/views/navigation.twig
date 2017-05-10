@@ -11,7 +11,23 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
+                {#                admin menu  #}
+                <ul class="nav navbar-nav navbar-right navigation-admin">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="{{ url('/admin') }}">{{ trans('go.dashboard') }}</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="{{ url('/admin/posts') }}">{{ trans('go.new_posts') }}</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="{{ url('/admin/users') }}">{{ trans('go.new_users') }}</a>
+                    </li>
+                </ul>
+                {#                    home menu   #}
+                <ul class="nav navbar-nav navbar-right navigation-home">
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
@@ -24,11 +40,13 @@
                     <li class="page-scroll">
                         <a href="#contact">{{ trans('go.contact') }}</a>
                     </li>
-                    <li>
-                        <a href="{{ url('/facebook/redirect') }}" class="btn btn-facebook btn-social">
-                            <i class="fa fa-facebook" title="Entrar"></i>
-                        </a>
-                    </li>
+                    {% if user|length == 0 %}
+                        <li>
+                            <a href="{{ url('/facebook/redirect') }}" class="btn btn-facebook btn-social">
+                                <i class="fa fa-facebook" title="Entrar"></i>
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

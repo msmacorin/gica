@@ -233,8 +233,8 @@ $(window).resize(function () {
 });
 
 $(document).ready(function () {
-    $('#page-top').removeClass('post');
     $('#page-top').addClass('home');
+    
     $('.phone').mask('(00)0000-00009');
     loadView();
     geoLocalizacao();

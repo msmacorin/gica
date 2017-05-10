@@ -32,8 +32,15 @@ Route::get('/facebook/callback', 'SocialAuthController@facebookCallback');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/admin', function() {
-        return view('admin');
+        return view('admin-dashboard');
     });
-    Route::get('/admin/posts', 'PostController@getPosts');
-    Route::post('/admin/posts', 'PostController@postPosts');
+    Route::get('/admin/posts', function() {
+        return view('admin-posts');
+    });
+    Route::get('/admin/users', function() {
+        return view('admin-users');
+    });
+    
+    Route::get('/admin/get-posts', 'PostController@getPosts');
+    Route::post('/admin/update-posts', 'PostController@postPosts');
 });

@@ -12,7 +12,7 @@ class PostController extends Controller {
         $latlon = $request->only('latitude', 'longitude');
         return view('post', ['data' => $latlon,]);
     }
-
+    
     public function getPosts(Request $request) {
         $params = $request->only('status');
         $posts = Post::with('types')
@@ -29,8 +29,7 @@ class PostController extends Controller {
                 'status' => $post->status,
             ];
         }
-
-        return view('admin_table', ['posts' => $data]);
+        return view('admin_table_posts', ['posts' => $data]);
     }
 
     public function postPosts(Request $request) {

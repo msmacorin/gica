@@ -120,7 +120,6 @@ $(document).on('click', '#btnSend', function () {
 });
 
 $(document).ready(function () {
-    $('#page-top').removeClass('home');
     $('#page-top').addClass('post');
 
     if (!$('#latitude').val()) {

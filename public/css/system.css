@@ -524,11 +524,11 @@ div#maincontent {
     padding: 0 50px 0 50px;
 }
 
-#page-top .nav, #page-top.post #bs-example-navbar-collapse-1 {
+#page-top.post .nav {
     display: none;
 }
 
-#page-top.home .nav, #page-top.post #bs-example-navbar-collapse-1 {
+#page-top .nav {
     display: block;
 }
 
@@ -543,4 +543,16 @@ div#maincontent {
 
 #messageBlock {
     display: none;
+}
+
+#page-top .navigation-admin, #page-top .navigation-home {
+    display: none;
+}
+
+#page-top.home .navigation-home {
+    display: block;
+}
+
+#page-top.admin .navigation-admin {
+    display: block;
 }
