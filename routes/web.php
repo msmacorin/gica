@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/posts/view', 'PostController@getView');
 Route::get('/posts/nearby', 'PostController@getNearby');
-Route::post('/posts/add', 'PostController@postAdd');
 Route::get('/post-types/types', 'PostTypeController@getTypes');
 
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -26,10 +24,35 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::post('/contact/send', 'ContactController@send');
 
+// facebook
+Route::get('/facebook/redirect', 'SocialAuthController@facebookRedirect');
+Route::get('/facebook/callback', 'SocialAuthController@facebookCallback');
+
 Route::group(['middleware' => 'auth'], function() {
+    Route::get('/posts/view', 'PostController@getView');
+    Route::post('/posts/add', 'PostController@postAdd');
+
     Route::get('/admin', function() {
-        return view('admin');
+        if (auth()->user()->administrator) {
+            return view('admin-dashboard');
+        }
+        return redirect('/');
     });
-    Route::get('/admin/posts', 'PostController@getPosts');
-    Route::post('/admin/posts', 'PostController@postPosts');
+    Route::get('/admin/posts', function() {
+        if (auth()->user()->administrator) {
+            return view('admin-posts');
+        }
+        return redirect('/');
+    });
+    Route::get('/admin/users', function() {
+        if (auth()->user()->administrator) {
+            return view('admin-users');
+        }
+        return redirect('/');
+    });
+
+    Route::get('/admin/get-posts', 'PostController@getPosts');
+    Route::post('/admin/update-posts', 'PostController@postPosts');
+    Route::get('/admin/get-users', 'UserController@getUsers');
+    Route::post('/admin/update-users', 'UserController@postUsers');
 });

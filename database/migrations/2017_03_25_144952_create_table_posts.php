@@ -20,7 +20,7 @@ class CreateTablePosts extends Migration {
             $table->float('latitude', 10, 8);
             $table->float('longitude', 10, 8);
             $table->string('address');
-            $table->integer('status')->default(0);
+            $table->integer('status')->default(2);
             $table->timestamps();
         });
     }

@@ -1,0 +1,19 @@
+{# empty Twig template #}
+{% extends "page" %}
+
+{% block content %}
+    <section id="post" class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h3>{{ trans('go.welcome_title') }}</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <span>{{ message }}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
