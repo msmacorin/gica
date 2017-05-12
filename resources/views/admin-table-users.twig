@@ -1,0 +1,39 @@
+<thead>
+    <tr>
+        <th style="width: 45%">{{ trans('go.name') }}</th>
+        <th style="width: 45%">{{ trans('go.email') }}</th>
+        <th>{{ trans('go.actions') }}</th>
+    </tr>
+</thead>
+<tbody>
+    {% for user in data %}
+        <tr id='{{ user.id }}'>
+            <td>
+                {% if user.link|length > 0 %}
+                    <a href="{{ user.link }}" target="_blank">{{ user.name }}</a>
+                {% else %}
+                    {{ user.name }}
+                {% endif %}
+            </td>
+            <td>{{ user.email }}</td>
+            <td>
+                {% if user.status != 1 %}
+                    <a href="#" onclick="changeStatus(1, {{ user.id }});" title="Aceitar">
+                        <span class="glyphicon glyphicon-ok-sign" />
+                    </a>
+                {% endif %}
+                {% if user.status != 4 %}
+                    <a href="#" onclick="changeStatus(4, {{ user.id }});" title="Negar">
+                        <span class="glyphicon glyphicon-ban-circle"></span>
+                    </a>
+                {% endif %}
+            </a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="4">{{ trans('go.empty') }}</td>
+    </tr>
+{% endfor %}
+
+</tbody>

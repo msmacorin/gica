@@ -1,0 +1,61 @@
+{# empty Twig template #}
+{% extends "page" %}
+
+{% block content %}
+    <section id="post" class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>{{ trans('go.new') }}</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <form name="newPost" id="postForm" data-parsley-validation method="POST" action="{{ url('/posts/add') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="post_type">{{ trans('go.type') }}</label>
+                                <select class="form-control" name="post_type" id="post_type" required name="post_type"></select>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="address">{{ trans('go.address') }}</label>
+                                <input type="text" class="form-control" placeholder="{{ trans('go.address') }}" id="address" name="address" required>
+                                <input type="hidden" id="latitude" value="{{ data.latitude }}" name="latitude" />
+                                <input type="hidden" id="longitude" value="{{ data.longitude }}" name="longitude" />
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="accurred_at">{{ trans('go.occurred_at') }}</label>
+                                <input type="text" class="form-control date" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}" placeholder="{{ trans('go.occurred_at') }}" name="occurred_at" required>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="observation">{{ trans('go.observation') }}</label>
+                                <textarea rows="5" class="form-control" placeholder="{{ trans('go.observation') }}" name="observation"></textarea>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div id="map" class="col-xs-12 post-map"></div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <a href="javascript:void(0);" id="btnSend" class="btn btn-block btn-success btn-lg">{{ trans('go.send') }}</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{{ asset('js/post.js') }}"></script>
+{% endblock %}

@@ -5,9 +5,13 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
+
     use Notifiable;
+
+    const ACTIVE = 1;
+    const BLOCKED = 2;
+    const DENIED = 4;
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'administrator', 'status'
     ];
 
     /**
@@ -26,4 +30,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function socialAccount() {
+        return $this->hasMany('App\SocialAccounts', 'user_id');
+    }
+
 }

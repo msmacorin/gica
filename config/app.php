@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'Go Sola',
 
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Sao_Paulo',
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'pt-BR',
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'pt-BR',
 
     /*
     |--------------------------------------------------------------------------
@@ -177,6 +177,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+//      twig
+        TwigBridge\ServiceProvider::class,
+//      Social
+        Laravel\Socialite\SocialiteServiceProvider::class,        
     ],
 
     /*
@@ -225,7 +229,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Twig' => TwigBridge\Facade\Twig::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];
