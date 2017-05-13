@@ -42,3 +42,7 @@
     });
 
 })(jQuery); // End of use strict
+
+function socialLogin(url) {
+    window.location.href = url;
+}
