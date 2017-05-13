@@ -180,7 +180,9 @@ return [
 //      twig
         TwigBridge\ServiceProvider::class,
 //      Social
-        Laravel\Socialite\SocialiteServiceProvider::class,        
+        Laravel\Socialite\SocialiteServiceProvider::class,
+//      Proxy
+        Fideloper\Proxy\TrustedProxyServiceProvider::class,
     ],
 
     /*
