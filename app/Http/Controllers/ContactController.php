@@ -11,7 +11,7 @@ class ContactController extends Controller {
     public function send(Request $request) {
         try {
             $data = $request->except('_token');
-            Mail::send('contact_email', $data, function($message) use ($data) {
+            Mail::send('email_contact', $data, function($message) use ($data) {
                $message->from($data['email'], $data['name']);
                $message->subject(trans('go.contact') . ' - ' . config('constants.SITE_NAME'));
                $message->to(config('constants.ADMIN_EMAIL'));

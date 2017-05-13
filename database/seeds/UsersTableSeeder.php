@@ -14,7 +14,9 @@ class UsersTableSeeder extends Seeder {
             'name' => 'Administrador',
             'email' => 'gica@gica.com',
             'password' => bcrypt(123),
-            'remember_token' => str_random(10)
+            'remember_token' => str_random(10),
+            'administrator' => true,
+            'status' => \App\User::ACTIVE,
         ]);
     }
 

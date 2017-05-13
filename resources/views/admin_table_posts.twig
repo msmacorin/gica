@@ -28,13 +28,11 @@
                         <span class="glyphicon glyphicon-ban-circle"></span>
                     </a>
                 {% endif %}
-            </a>
-        </td>
-    </tr>
-{% else %}
-    <tr>
-        <td colspan="4">{{ trans('go.empty') }}</td>
-    </tr>
-{% endfor %}
-
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">{{ trans('go.empty') }}</td>
+        </tr>
+    {% endfor %}
 </tbody>

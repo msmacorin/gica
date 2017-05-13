@@ -1,0 +1,42 @@
+{# empty Twig template #}
+{% extends "page" %}
+
+{% block meta %}
+    <meta name="_token" content="{{ csrf_token() }}">
+{% endblock %}
+
+{% block content %}
+    <section id="post" class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>{{ trans('go.new_posts') }}</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <select class="form-control" id="post_status">
+                                <option value="">Selecione...</option>
+                                <option value="1">{{ trans('go.active') }}</option>
+                                <option value="2">{{ trans('go.blocked') }}</option>
+                                <option value="4">{{ trans('go.denied') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <table class="table" id="tablePost">
+                            {% include 'admin_table_posts' %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{{ asset('js/admin-posts.js') }}"></script>
+{% endblock %}
