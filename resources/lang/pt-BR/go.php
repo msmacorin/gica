@@ -25,6 +25,7 @@ return [
     'enter' => 'Entrar',
     'link' => 'Link',
     'login' => 'Login',
+    'login-facebook' => 'Entre com o facebook',
     'message' => 'Descrição do ocorrido',
     'name' => 'Nome',
     'new' => 'Novo post',
