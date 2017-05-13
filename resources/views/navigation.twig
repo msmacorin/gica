@@ -42,9 +42,9 @@
                     </li>
                     {% if user|length == 0 %}
                         <li>
-                            <a href="{{ url('/facebook/redirect') }}" class="btn btn-facebook btn-social">
-                                <i class="fa fa-facebook" title="Entrar"></i>
-                            </a>
+                            <button class="loginBtn loginBtn--facebook" onclick="socialLogin('{{ url('/facebook/redirect') }}');">
+                                {{ trans('go.login-facebook') }}
+                            </button>
                         </li>
                     {% endif %}
                 </ul>
