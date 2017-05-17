@@ -11,48 +11,48 @@
   |
  */
 
-Route::get('/', function () {
+Route::get('/public/', function () {
     return view('home');
 });
 
-Route::get('/posts/nearby', 'PostController@getNearby');
-Route::get('/post-types/types', 'PostTypeController@getTypes');
+Route::get('/public/posts/nearby', 'PostController@getNearby');
+Route::get('/public/post-types/types', 'PostTypeController@getTypes');
 
-Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('/login', 'Auth\LoginController@login');
-Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('/public/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/public/login', 'Auth\LoginController@login');
+Route::get('/public/logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::post('/contact/send', 'ContactController@send');
+Route::post('/public/contact/send', 'ContactController@send');
 
 // facebook
-Route::get('/facebook/redirect', 'SocialAuthController@facebookRedirect');
-Route::get('/facebook/callback', 'SocialAuthController@facebookCallback');
+Route::get('/public/facebook/redirect', 'SocialAuthController@facebookRedirect');
+Route::get('/public/facebook/callback', 'SocialAuthController@facebookCallback');
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/posts/view', 'PostController@getView');
-    Route::post('/posts/add', 'PostController@postAdd');
+    Route::get('/public/posts/view', 'PostController@getView');
+    Route::post('/public/posts/add', 'PostController@postAdd');
 
-    Route::get('/admin', function() {
+    Route::get('/public/admin', function() {
         if (auth()->user()->administrator) {
             return view('admin-dashboard');
         }
-        return redirect('/');
+        return redirect('/public/');
     });
-    Route::get('/admin/posts', function() {
+    Route::get('/public/admin/posts', function() {
         if (auth()->user()->administrator) {
             return view('admin-posts');
         }
-        return redirect('/');
+        return redirect('/public/');
     });
-    Route::get('/admin/users', function() {
+    Route::get('/public/admin/users', function() {
         if (auth()->user()->administrator) {
             return view('admin-users');
         }
-        return redirect('/');
+        return redirect('/public/');
     });
 
-    Route::get('/admin/get-posts', 'PostController@getPosts');
-    Route::post('/admin/update-posts', 'PostController@postPosts');
-    Route::get('/admin/get-users', 'UserController@getUsers');
-    Route::post('/admin/update-users', 'UserController@postUsers');
+    Route::get('/public/admin/get-posts', 'PostController@getPosts');
+    Route::post('/public/admin/update-posts', 'PostController@postPosts');
+    Route::get('/public/admin/get-users', 'UserController@getUsers');
+    Route::post('/public/admin/update-users', 'UserController@postUsers');
 });
