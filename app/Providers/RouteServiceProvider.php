@@ -26,9 +26,12 @@ class RouteServiceProvider extends ServiceProvider {
 
         parent::boot();
         view()->composer('*', function($view) {
+            $data = [];
+            $data[] = ['prefix_url' => env('PREFIX_URL', ''),];
             if (auth()->user()) {
-                $view->with('user', auth()->user());
+                $data[] = ['user' => auth()->user()];
             }
+            $view->with($data);
         });
     }
 
