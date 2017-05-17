@@ -52,8 +52,8 @@ function autocompleteInit() {
 function changeLocation(lat, lng, searchTrigger) {
     $('#latitude').val(lat);
     $('#longitude').val(lng);
-    localStorage.setItem('latitude', lat);
-    localStorage.setItem('longitude', lng);
+    localStorage.setItem('gosola_latitude', lat);
+    localStorage.setItem('gosola_longitude', lng);
     if (searchTrigger && map != undefined) {
         $('#btnSearch').trigger('click');
     }
@@ -70,9 +70,9 @@ function ipLocalizacao() {
 }
 
 function geoLocalizacao() {
-    if (localStorage.getItem('latitude')) {
-        $('#latitude').val(localStorage.getItem('latitude'));
-        $('#longitude').val(localStorage.getItem('longitude'));
+    if (localStorage.getItem('gosola_latitude')) {
+        $('#latitude').val(localStorage.getItem('gosola_latitude'));
+        $('#longitude').val(localStorage.getItem('gosola_longitude'));
     } else {
         //brasilia
         $('#latitude').val('-15.794157');
