@@ -6,7 +6,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="{{ url('/') }}">{{ config_get('constants.SITE_NAME') }}</a>
+                <a class="navbar-brand" href="{{ prefix_url ~ '/' }}">{{ config_get('constants.SITE_NAME') }}</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -17,13 +17,13 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="{{ url('/admin') }}">{{ trans('go.dashboard') }}</a>
+                        <a href="{{ prefix_url ~ '/admin' }}">{{ trans('go.dashboard') }}</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="{{ url('/admin/posts') }}">{{ trans('go.new_posts') }}</a>
+                        <a href="{{ prefix_url ~ '/admin/posts' }}">{{ trans('go.new_posts') }}</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="{{ url('/admin/users') }}">{{ trans('go.new_users') }}</a>
+                        <a href="{{ prefix_url ~ '/admin/users' }}">{{ trans('go.new_users') }}</a>
                     </li>
                 </ul>
                 {#                    home menu   #}
@@ -42,7 +42,7 @@
                     </li>
                     {% if user|length == 0 %}
                         <li>
-                            <button class="loginBtn loginBtn--facebook" onclick="socialLogin('{{ url('/facebook/redirect') }}');">
+                            <button class="loginBtn loginBtn--facebook" onclick="socialLogin('{{ prefix_url ~ '/facebook/redirect' }}');">
                                 {{ trans('go.login-facebook') }}
                             </button>
                         </li>

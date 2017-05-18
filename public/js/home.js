@@ -114,7 +114,7 @@ function search() {
     }
     originalCenter = new google.maps.LatLng($("#latitude").val(), $("#longitude").val());
     $.ajax({
-        url: '/public/posts/nearby/?latitude=' + $('#latitude').val() + '&longitude=' + $('#longitude').val(),
+        url: prefix_url + '/posts/nearby/?latitude=' + $('#latitude').val() + '&longitude=' + $('#longitude').val(),
         type: 'GET',
         success: function (data) {
             clearMarkers();
@@ -202,7 +202,7 @@ $('#btnSearch').click(function () {
 });
 
 $('#btnAdd').click(function () {
-    var url = '/public/posts/view';
+    var url = prefix_url + '/posts/view';
     if ($('#latitude').val()) {
         url += '/?latitude=' + $('#latitude').val() + '&longitude=' + $('#longitude').val();
     }
@@ -213,7 +213,7 @@ $(document).on('click', '#btnSend', function () {
     if ($('#contactForm').parsley().validate()) {
         $.ajax({
             type: 'POST',
-            url: '/public/contact/send',
+            url: prefix_url + '/contact/send',
             data: $('#contactForm').serialize(),
             success: function (data) {
                 $('#messageBlock .form-group').html('<p class="alert alert-success">' + data.message + '</p>');

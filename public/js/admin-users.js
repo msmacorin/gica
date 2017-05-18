@@ -7,7 +7,7 @@
 function changeStatus(status, id) {
     var data = {'status': status, 'id': id};
     $.ajax({
-        url: '/admin/update-users',
+        url: prefix_url + '/admin/update-users',
         type: 'POST',
         data: data,
         beforeSend: function (request) {
@@ -20,7 +20,7 @@ function changeStatus(status, id) {
 }
 
 function search(type) {
-    var url = '/admin/get-users/?status=' + type;
+    var url = prefix_url + '/admin/get-users/?status=' + type;
     $.ajax({
         url: url,
         success: function (data) {

@@ -9,7 +9,7 @@ var map, marker, infoWindow = null;
 function fillSelectPostType() {
     $('#post_type').append('<option value="">Selecione...</option>');
     $.ajax({
-        url: '/post-types/types',
+        url: prefix_url + '/post-types/types',
         type: 'GET',
         success: function (data) {
             var opts = $.parseJSON(data);

@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <form method="POST" action="{{ url('/login') }}">
+                    <form method="POST" action="{{ prefix_url ~ '/login' }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <input type="hidden" name="remember" value="false" />
                         <div class="row control-group">

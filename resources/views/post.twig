@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <form name="newPost" id="postForm" data-parsley-validation method="POST" action="{{ url('/posts/add') }}">
+                    <form name="newPost" id="postForm" data-parsley-validation method="POST" action="{{ prefix_url ~ '/posts/add' }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
