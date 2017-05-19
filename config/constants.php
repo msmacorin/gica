@@ -10,7 +10,7 @@
  */
 
 return [
-    'ADMIN_EMAIL' => 'ms.macorin2@gmail.com',
+    'ADMIN_EMAIL' => env('ADMIN_EMAIL', 'giovana.razeira@gmail.com'),
     'SITE_NAME' => 'GO SOLA',
-    'GOOGLE_API_KEY' => 'AIzaSyBpBmsCWfgRytQ6wUUI-nqrR1qKtbMEXGQ',
+    'GOOGLE_API_KEY' => env('GOOGLE_API_KEY'),
 ];
